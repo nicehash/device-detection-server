@@ -68,7 +68,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
         g_szClassName,
         L"",
         0,
-        -1000, -1000, 0, 0,
+        -10000, -10000, 0, 0,
         NULL, NULL, hInstance, NULL);
 
     if (hwnd == NULL)
