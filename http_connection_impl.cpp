@@ -40,13 +40,15 @@ connection_impl::connection_impl(
         boost::asio::io_service& ioc,
         const uint32_t index,
         const std::shared_ptr<boost::asio::ip::tcp::socket> &tcp,
-        const close_cb &on_socket_closed):
+        const close_cb &on_socket_closed,
+        const std::string& detected_devices_json):
         m_index{index},
         m_io_service{ioc},
         m_strand{ioc},
         m_on_socket_closed{on_socket_closed},
         m_tcp{tcp},
-        m_disconnect_timer{ioc}
+        m_disconnect_timer{ioc},
+        m_detected_devices_json(detected_devices_json)
 {
 }
 
@@ -162,8 +164,8 @@ void connection_impl::handle_request(const http_request_ptr &request)
 
     TRACE("Received: " << request->target().to_string().data());
 
-    std::string out;
-    out = R"---({"devices":[]})---";
+    std::string out = m_detected_devices_json; // copy
+    //out = R"---({"devices":[]})---";
     write(create_success_response(request, std::move(out)));
 }
 
