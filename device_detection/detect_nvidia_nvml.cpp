@@ -34,6 +34,15 @@ std::string detect_nvidia_nvml::get_nvidia_nvml_devices_json_str(bool pretty_pri
 	return "[]";
 }
 
+void detect_nvidia_nvml::fill_nvidia_device_names(std::vector<std::string>& devices) {
+	std::vector<NVIDIADevice> nvidia_devices;
+	if (detect_nvidia_devs(nvidia_devices)) {
+		for (auto dev : nvidia_devices) {
+			devices.push_back(dev.name);
+		}
+	}
+}
+
 typedef int(*nvml_Init)(void);
 typedef int(*nvml_Shutdown)(void);
 typedef nvmlReturn_t(*nvml_DeviceGetCount)(unsigned int* deviceCount);

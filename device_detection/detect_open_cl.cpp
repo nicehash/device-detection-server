@@ -13,6 +13,8 @@
 #include <string>
 #include <vector>
 #include <tuple>
+#include <optional>
+#include <math.h>
 
 #include "json.hpp"
 
@@ -79,6 +81,37 @@ std::string detect_open_cl::get_open_cl_devices_json_str(bool pretty_print) {
 	}
 	return "[]";
 }
+
+std::optional<std::string> convert_size(double size) {
+	static const std::array units = { "B", "KB", "MB", "GB", "TB", "PB" };
+	static const double mod = 1024.0;
+	int i = 0;
+	while (size >= mod && i < units.size()) {
+		size /= mod;
+		i++;
+	}
+	if (units.size()) return std::to_string((int)(ceil(size))) + units[i];
+	return std::nullopt;
+}
+
+void detect_open_cl::fill_amd_device_names(std::vector<std::string>& devices) {
+	std::vector<open_cl_platform> platform_devices;
+	if (const auto [ok, status, errors] = detect_open_cl_platform_devices(platform_devices); ok) {
+		for (auto platform : platform_devices) {
+			bool isAMDDevice = platform.PlatformVendor.find("Advanced Micro Devices") != std::string::npos || platform.PlatformVendor.find("AMD") != std::string::npos;
+			if (!isAMDDevice) continue;
+			for (auto dev : platform.Devices) {
+				if (auto postfix = convert_size(dev._CL_DEVICE_GLOBAL_MEM_SIZE); postfix.has_value()) {
+					devices.push_back(dev._CL_DEVICE_BOARD_NAME_AMD + " " + postfix.value());
+				}
+				else {
+					devices.push_back(dev._CL_DEVICE_BOARD_NAME_AMD);
+				}
+			}
+		}
+	}
+}
+
 
 //C implementation
 /////////////////////////////////////////////////////////////////
