@@ -42,9 +42,6 @@
     <ClInclude Include="http_connection_impl.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="device_detection\detect_amd_adl.h">
-      <Filter>Header Files\device_detection</Filter>
-    </ClInclude>
     <ClInclude Include="device_detection\detect_nvidia_nvml.h">
       <Filter>Header Files\device_detection</Filter>
     </ClInclude>
@@ -70,9 +67,6 @@
     </ClCompile>
     <ClCompile Include="http_connection_impl.cpp">
       <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="device_detection\detect_amd_adl.cpp">
-      <Filter>Source Files\device_detection</Filter>
     </ClCompile>
     <ClCompile Include="device_detection\detect_nvidia_nvml.cpp">
       <Filter>Source Files\device_detection</Filter>
