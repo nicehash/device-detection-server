@@ -57,6 +57,7 @@
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>..\libs\windows\boost_1_72_0\include;$(ProjectDir)\3rdParty\nvml;$(ProjectDir)\3rdParty\ocl_sdk_light\include;$(ProjectDir)\3rdParty\nlohmann;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp17</LanguageStandard>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -75,6 +76,7 @@
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>..\libs\windows\boost_1_72_0\include;$(ProjectDir)\3rdParty\nvml;$(ProjectDir)\3rdParty\ocl_sdk_light\include;$(ProjectDir)\3rdParty\nlohmann;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp17</LanguageStandard>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
