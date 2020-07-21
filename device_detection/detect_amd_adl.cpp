@@ -125,7 +125,7 @@ void deinitializeADL()
     FreeLibrary(hDLL);
 }
 
-std::optional<std::string> convert_size2(double size) {
+std::optional<std::string> convert_size(double size) {
     static const std::array units = { "B", "KB", "MB", "GB", "TB", "PB" };
     static const double mod = 1024.0;
     int i = 0;
@@ -162,9 +162,8 @@ bool get_amd_adl_adapters(std::vector<std::string> &out_adapter_names) {
             if (added_bus_numbers.find(lpAdapterInfo[i].iBusNumber) == added_bus_numbers.end()) {
                 added_bus_numbers.insert(lpAdapterInfo[i].iBusNumber);
                 ADLMemoryInfo lpMemoryInfo;
-                //ADLMemoryInfo lpMemoryInfo = (ADLMemoryInfo)malloc(sizeof(ADLMemoryInfo));
                 if (ADL_OK == ADL2_Adapter_MemoryInfo_Get(context, lpAdapterInfo[i].iAdapterIndex, &lpMemoryInfo)) {
-                    if (auto postfix = convert_size2(lpMemoryInfo.iMemorySize); postfix.has_value()) {
+                    if (auto postfix = convert_size(lpMemoryInfo.iMemorySize); postfix.has_value()) {
                         out_adapter_names.push_back(std::string(lpAdapterInfo[i].strAdapterName) + " " + postfix.value());
                         continue;
                     }

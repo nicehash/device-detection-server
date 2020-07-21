@@ -45,9 +45,6 @@
     <ClInclude Include="device_detection\detect_nvidia_nvml.h">
       <Filter>Header Files\device_detection</Filter>
     </ClInclude>
-    <ClInclude Include="device_detection\detect_open_cl.h">
-      <Filter>Header Files\device_detection</Filter>
-    </ClInclude>
     <ClInclude Include="device_detection\device_detection.h">
       <Filter>Header Files\device_detection</Filter>
     </ClInclude>
@@ -72,9 +69,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="device_detection\detect_nvidia_nvml.cpp">
-      <Filter>Source Files\device_detection</Filter>
-    </ClCompile>
-    <ClCompile Include="device_detection\detect_open_cl.cpp">
       <Filter>Source Files\device_detection</Filter>
     </ClCompile>
     <ClCompile Include="device_detection\device_detection.cpp">
