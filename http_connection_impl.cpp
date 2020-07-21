@@ -49,7 +49,7 @@ connection_impl::connection_impl(
         m_on_socket_closed{on_socket_closed},
         m_tcp{tcp},
         m_disconnect_timer{ioc},
-        m_detected_devices_json(detected_devices_json)
+        m_detected_devices_json{detected_devices_json}
 {
 }
 
@@ -128,7 +128,7 @@ void connection_impl::handle_write(const boost::system::error_code &ec, std::siz
         return;
     }
 
-    read();
+    close_socket();
 }
 
 void connection_impl::close_socket()
@@ -145,11 +145,10 @@ void connection_impl::close_socket()
     if (m_tcp) {
         boost::system::error_code ec;
         m_tcp->shutdown(boost::asio::ip::tcp::socket::shutdown_both, ec);
-
-        TRACE("[" << m_index << "]: TCP connection_impl closed");
-
-        m_on_socket_closed(shared_from_this());
     }
+
+    TRACE("[" << m_index << "]: TCP connection_impl closed");
+    m_on_socket_closed(shared_from_this());
 }
 
 
@@ -165,8 +164,7 @@ void connection_impl::handle_request(const http_request_ptr &request)
 
     TRACE("Received: " << request->target().to_string().data());
 
-    std::string out = m_detected_devices_json; // copy
-    //out = R"---({"devices":[]})---";
+    std::string out = m_detected_devices_json;
     write(create_success_response(request, std::move(out)));
 }
 

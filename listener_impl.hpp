@@ -17,7 +17,7 @@ class listener_impl : public listener, public std::enable_shared_from_this<liste
 public:
     ~listener_impl() override = default;
 
-    listener_impl(boost::asio::io_service&, uint32_t id, const std::string &address, uint16_t port, const std::string & detected_devices_json);
+    listener_impl(boost::asio::io_service&, uint32_t id, const std::string &address, uint16_t port, std::string && detected_devices_json, const close_cb& cb);
 
     boost::system::error_code start() override;
 
@@ -42,6 +42,7 @@ private:
     std::deque<uint32_t> m_client_ids;
 
     std::string m_detected_devices_json;
+    close_cb m_cb;
 };
 }
 
