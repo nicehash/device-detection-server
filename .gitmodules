@@ -1,0 +1,3 @@
+[submodule "3rdParty/adl"]
+	path = 3rdParty/adl
+	url = git@github.com:GPUOpen-LibrariesAndSDKs/display-library.git
