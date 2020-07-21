@@ -51,6 +51,9 @@
     <ClInclude Include="device_detection\device_detection.h">
       <Filter>Header Files\device_detection</Filter>
     </ClInclude>
+    <ClInclude Include="device_detection\detect_amd_adl.h">
+      <Filter>Header Files\device_detection</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="application.cpp">
@@ -75,6 +78,9 @@
       <Filter>Source Files\device_detection</Filter>
     </ClCompile>
     <ClCompile Include="device_detection\device_detection.cpp">
+      <Filter>Source Files\device_detection</Filter>
+    </ClCompile>
+    <ClCompile Include="device_detection\detect_amd_adl.cpp">
       <Filter>Source Files\device_detection</Filter>
     </ClCompile>
   </ItemGroup>
