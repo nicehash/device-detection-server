@@ -55,7 +55,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_WINDOWS;%(PreprocessorDefinitions);_WIN32_WINNT=0x0601;WIN32_LEAN_AND_MEAN</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>..\libs\windows\boost_1_72_0\include;$(ProjectDir)\3rdParty\nvml;$(ProjectDir)\3rdParty\ocl_sdk_light\include;$(ProjectDir)\3rdParty\nlohmann;$(ProjectDir)\3rdParty\adl\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\libs\windows\boost_1_72_0\include;$(ProjectDir)\3rdParty\nvml;$(ProjectDir)\3rdParty\ocl_sdk_light\include;$(ProjectDir)\3rdParty\nlohmann\single_include\nlohmann;$(ProjectDir)\3rdParty\adl\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
     </ClCompile>
@@ -74,7 +74,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_WINDOWS;%(PreprocessorDefinitions);_WIN32_WINNT=0x0601;WIN32_LEAN_AND_MEAN</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>..\libs\windows\boost_1_72_0\include;$(ProjectDir)\3rdParty\nvml;$(ProjectDir)\3rdParty\ocl_sdk_light\include;$(ProjectDir)\3rdParty\nlohmann;$(ProjectDir)\3rdParty\adl\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\libs\windows\boost_1_72_0\include;$(ProjectDir)\3rdParty\nvml;$(ProjectDir)\3rdParty\ocl_sdk_light\include;$(ProjectDir)\3rdParty\nlohmann\single_include\nlohmann;$(ProjectDir)\3rdParty\adl\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
     </ClCompile>
