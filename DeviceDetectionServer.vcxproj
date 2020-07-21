@@ -55,15 +55,15 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_WINDOWS;%(PreprocessorDefinitions);_WIN32_WINNT=0x0601;WIN32_LEAN_AND_MEAN</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>..\libs\windows\boost_1_72_0\include;$(ProjectDir)\3rdParty\nvml;$(ProjectDir)\3rdParty\ocl_sdk_light\include;$(ProjectDir)\3rdParty\nlohmann;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\libs\windows\boost_1_72_0\include;$(ProjectDir)\3rdParty\nvml;$(ProjectDir)\3rdParty\ocl_sdk_light\include;$(ProjectDir)\3rdParty\nlohmann;$(ProjectDir)\3rdParty\adl\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>..\libs\windows\boost_1_72_0\lib;$(ProjectDir)\3rdParty\ocl_sdk_light\lib\x86_64</AdditionalLibraryDirectories>
-      <AdditionalDependencies>OpenCL.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>..\libs\windows\boost_1_72_0\lib</AdditionalLibraryDirectories>
+      <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -74,7 +74,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_WINDOWS;%(PreprocessorDefinitions);_WIN32_WINNT=0x0601;WIN32_LEAN_AND_MEAN</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>..\libs\windows\boost_1_72_0\include;$(ProjectDir)\3rdParty\nvml;$(ProjectDir)\3rdParty\ocl_sdk_light\include;$(ProjectDir)\3rdParty\nlohmann;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\libs\windows\boost_1_72_0\include;$(ProjectDir)\3rdParty\nvml;$(ProjectDir)\3rdParty\ocl_sdk_light\include;$(ProjectDir)\3rdParty\nlohmann;$(ProjectDir)\3rdParty\adl\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
     </ClCompile>
@@ -83,14 +83,14 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>..\libs\windows\boost_1_72_0\lib;$(ProjectDir)\3rdParty\ocl_sdk_light\lib\x86_64</AdditionalLibraryDirectories>
-      <AdditionalDependencies>OpenCL.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>..\libs\windows\boost_1_72_0\lib</AdditionalLibraryDirectories>
+      <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="application.hpp" />
+    <ClInclude Include="device_detection\detect_amd_adl.h" />
     <ClInclude Include="device_detection\detect_nvidia_nvml.h" />
-    <ClInclude Include="device_detection\detect_open_cl.h" />
     <ClInclude Include="device_detection\device_detection.h" />
     <ClInclude Include="http_connection.hpp" />
     <ClInclude Include="http_connection_impl.hpp" />
@@ -101,8 +101,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="application.cpp" />
+    <ClCompile Include="device_detection\detect_amd_adl.cpp" />
     <ClCompile Include="device_detection\detect_nvidia_nvml.cpp" />
-    <ClCompile Include="device_detection\detect_open_cl.cpp" />
     <ClCompile Include="device_detection\device_detection.cpp" />
     <ClCompile Include="http_connection_impl.cpp" />
     <ClCompile Include="listener_impl.cpp" />
