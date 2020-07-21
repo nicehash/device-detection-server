@@ -28,6 +28,7 @@ auto create_success_response(const std::shared_ptr<boost::beast::http::request<b
 {
     boost::beast::http::response<boost::beast::http::string_body> response{boost::beast::http::status::ok, request->version()};
     response.set(boost::beast::http::field::server, BOOST_BEAST_VERSION_STRING);
+    response.set(boost::beast::http::field::access_control_allow_origin, "*");
     response.set(boost::beast::http::field::content_type, "application/json");
     response.body() = std::move(body);
     response.prepare_payload();
@@ -40,13 +41,15 @@ connection_impl::connection_impl(
         boost::asio::io_service& ioc,
         const uint32_t index,
         const std::shared_ptr<boost::asio::ip::tcp::socket> &tcp,
-        const close_cb &on_socket_closed):
+        const close_cb &on_socket_closed,
+        const std::string& detected_devices_json):
         m_index{index},
         m_io_service{ioc},
         m_strand{ioc},
         m_on_socket_closed{on_socket_closed},
         m_tcp{tcp},
-        m_disconnect_timer{ioc}
+        m_disconnect_timer{ioc},
+        m_detected_devices_json{detected_devices_json}
 {
 }
 
@@ -125,7 +128,7 @@ void connection_impl::handle_write(const boost::system::error_code &ec, std::siz
         return;
     }
 
-    read();
+    close_socket();
 }
 
 void connection_impl::close_socket()
@@ -142,11 +145,10 @@ void connection_impl::close_socket()
     if (m_tcp) {
         boost::system::error_code ec;
         m_tcp->shutdown(boost::asio::ip::tcp::socket::shutdown_both, ec);
-
-        TRACE("[" << m_index << "]: TCP connection_impl closed");
-
-        m_on_socket_closed(shared_from_this());
     }
+
+    TRACE("[" << m_index << "]: TCP connection_impl closed");
+    m_on_socket_closed(shared_from_this());
 }
 
 
@@ -162,8 +164,7 @@ void connection_impl::handle_request(const http_request_ptr &request)
 
     TRACE("Received: " << request->target().to_string().data());
 
-    std::string out;
-    out = R"---({"devices":[]})---";
+    std::string out = m_detected_devices_json;
     write(create_success_response(request, std::move(out)));
 }
 

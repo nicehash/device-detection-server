@@ -2,7 +2,12 @@
 #include <windows.h>
 #include <memory>
 
+#include "device_detection/device_detection.h"
+
 std::shared_ptr<application> app;
+
+HWND hdnw_label;
+std::string g_devices;
 
 LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 {
@@ -10,13 +15,17 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
     switch (msg)
     {
     case WM_CREATE:
-        app->start();
+    {
+        auto devices = device_detection::detect_and_get_json_str();
+        g_devices = devices;
+        app->start(hwnd, std::move(devices));
         break;
+    }
     case WM_CLOSE:
-        app->stop();
         DestroyWindow(hwnd);
         break;
     case WM_DESTROY:
+        app->stop();
         app = nullptr;
         PostQuitMessage(0);
         break;
@@ -64,11 +73,11 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
     }
 
     hwnd = CreateWindowEx(
-        WS_EX_TRANSPARENT,
+        WS_EX_APPWINDOW,
         g_szClassName,
-        L"",
-        0,
-        -10000, -10000, 0, 0,
+        L"NiceHash Device Detector",
+        WS_OVERLAPPED|WS_CAPTION|WS_SYSMENU,
+        CW_USEDEFAULT, CW_USEDEFAULT, 640, 480,
         NULL, NULL, hInstance, NULL);
 
     if (hwnd == NULL)
@@ -77,12 +86,15 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
             MB_ICONEXCLAMATION | MB_OK);
         return 0;
     }
+    hdnw_label = CreateWindow(L"static", L"",
+        WS_CHILD | WS_VISIBLE | WS_TABSTOP,
+        10, 10, 280, 180,
+        hwnd, (HMENU)(501),
+        hInstance, NULL);
+    SetWindowText(hdnw_label, std::wstring(g_devices.begin(), g_devices.end()).data());
 
-    long wAttr = GetWindowLong(hwnd, GWL_EXSTYLE);
-    SetWindowLong(hwnd, GWL_EXSTYLE, wAttr | WS_EX_LAYERED);
-    SetLayeredWindowAttributes(hwnd, 0, 0, 0x02);
 
-    ShowWindow(hwnd, SW_MINIMIZE);
+    ShowWindow(hwnd, nCmdShow);
     UpdateWindow(hwnd);
 
     while (GetMessage(&Msg, NULL, 0, 0) > 0)

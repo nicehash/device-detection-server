@@ -20,7 +20,8 @@ public:
             boost::asio::io_service& ioc,
             const uint32_t index,
             const std::shared_ptr<boost::asio::ip::tcp::socket> &tcp,
-            const close_cb &on_socket_closed);
+            const close_cb &on_socket_closed,
+            const std::string& detected_devices_json);
 
     void start() override;
 
@@ -54,6 +55,8 @@ private:
 
     std::shared_ptr<boost::asio::ip::tcp::socket> m_tcp;
     bool m_closed = false;
+
+    std::string m_detected_devices_json;
  };
 
 }

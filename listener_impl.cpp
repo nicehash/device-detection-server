@@ -9,14 +9,16 @@ const uint32_t max_size =  1000000;
 
 namespace http {
 
-listener_impl::listener_impl(boost::asio::io_service &ios, uint32_t id, const std::string &address, uint16_t port):
+listener_impl::listener_impl(boost::asio::io_service &ios, uint32_t id, const std::string &address, uint16_t port, std::string && detected_devices_json, const close_cb& cb):
         m_io_service(ios),
         m_acceptor(ios),
         m_client_strand(ios),
         m_id{id},
         m_bind_address(address),
         m_bind_port(port),
-        m_client_ids(max_size)
+        m_client_ids(max_size),
+        m_detected_devices_json(std::move(detected_devices_json)),
+        m_cb{cb}
 {
     std::iota(m_client_ids.begin(), m_client_ids.end(), m_id * max_size);
 }
@@ -58,6 +60,7 @@ void listener_impl::stop()
         for (auto &c: self->m_client_list) {
             c->stop();
         }
+        self->m_acceptor.cancel();
     });
 }
 
@@ -86,7 +89,7 @@ void listener_impl::handle_accept(const boost::system::error_code &ec, const std
     m_client_strand.post([self, tcp]() {
         uint32_t id = self->m_client_ids.front();
         auto cb = std::bind(&listener_impl::remove_connection, self, std::placeholders::_1);
-        auto client = std::make_shared<http::connection_impl>(self->m_io_service, id, tcp, cb);
+        auto client = std::make_shared<http::connection_impl>(self->m_io_service, id, tcp, cb, self->m_detected_devices_json);
 
         self->m_client_ids.pop_front();
         self->m_client_list.insert(client);
@@ -106,6 +109,7 @@ void listener_impl::remove_connection(const std::shared_ptr<connection> &connect
         if (it != self->m_client_list.end()) {
             self->m_client_list.erase(it);
         }
+        self->m_cb();
     });
 }
 
