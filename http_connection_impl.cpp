@@ -28,6 +28,7 @@ auto create_success_response(const std::shared_ptr<boost::beast::http::request<b
 {
     boost::beast::http::response<boost::beast::http::string_body> response{boost::beast::http::status::ok, request->version()};
     response.set(boost::beast::http::field::server, BOOST_BEAST_VERSION_STRING);
+    response.set(boost::beast::http::field::access_control_allow_origin, "*");
     response.set(boost::beast::http::field::content_type, "application/json");
     response.body() = std::move(body);
     response.prepare_payload();
