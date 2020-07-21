@@ -102,7 +102,8 @@ int initializeADL()
     if (NULL == ADL_Main_Control_Create ||
         NULL == ADL_Main_Control_Destroy ||
         NULL == ADL_Adapter_NumberOfAdapters_Get ||
-        NULL == ADL_Adapter_AdapterInfo_Get
+        NULL == ADL_Adapter_AdapterInfo_Get ||
+        NULL == ADL2_Adapter_MemoryInfo_Get
         )
     {
         PRINTF("Failed to get ADL function pointers\n");
