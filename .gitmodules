@@ -1,0 +1,6 @@
+[submodule "3rdParty/adl"]
+	path = 3rdParty/adl
+	url = git@github.com:GPUOpen-LibrariesAndSDKs/display-library.git
+[submodule "3rdParty/nlohmann"]
+	path = 3rdParty/nlohmann
+	url = git@github.com:nlohmann/json.git

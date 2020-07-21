@@ -13,6 +13,12 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Header Files\device_detection">
+      <UniqueIdentifier>{e35a7158-1fa5-41de-8cd1-816953cc301a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\device_detection">
+      <UniqueIdentifier>{c0a138d5-6be9-4caa-a393-a624ca1ca0de}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="application.hpp">
@@ -36,6 +42,15 @@
     <ClInclude Include="http_connection_impl.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="device_detection\detect_nvidia_nvml.h">
+      <Filter>Header Files\device_detection</Filter>
+    </ClInclude>
+    <ClInclude Include="device_detection\device_detection.h">
+      <Filter>Header Files\device_detection</Filter>
+    </ClInclude>
+    <ClInclude Include="device_detection\detect_amd_adl.h">
+      <Filter>Header Files\device_detection</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="application.cpp">
@@ -52,6 +67,15 @@
     </ClCompile>
     <ClCompile Include="http_connection_impl.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="device_detection\detect_nvidia_nvml.cpp">
+      <Filter>Source Files\device_detection</Filter>
+    </ClCompile>
+    <ClCompile Include="device_detection\device_detection.cpp">
+      <Filter>Source Files\device_detection</Filter>
+    </ClCompile>
+    <ClCompile Include="device_detection\detect_amd_adl.cpp">
+      <Filter>Source Files\device_detection</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

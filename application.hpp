@@ -7,7 +7,7 @@
 class application
 {
 public:
-    void start();
+    void start(HWND hwnd, std::string&& devices);
     void stop();
 
 private:
