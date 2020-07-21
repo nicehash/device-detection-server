@@ -134,7 +134,7 @@ std::optional<std::string> convert_size(double size) {
         size /= mod;
         i++;
     }
-    if (units.size()) return std::to_string((int)(ceil(size))) + units[i];
+    if (i < units.size()) return std::to_string((int)(ceil(size))) + units[i];
     return std::nullopt;
 }
 
