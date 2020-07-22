@@ -111,7 +111,6 @@
     <ClCompile Include="device_detection\device_detection.cpp" />
     <ClCompile Include="http_connection_impl.cpp" />
     <ClCompile Include="listener_impl.cpp" />
-    <ClCompile Include="main.cpp" />
     <ClCompile Include="workers.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -120,6 +119,9 @@
   <ItemGroup>
     <Image Include="DeviceDetectionServer.ico" />
     <Image Include="small.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Font Include="Ubuntu-R.ttf" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
