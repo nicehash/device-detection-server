@@ -16,9 +16,9 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
     {
     case WM_CREATE:
     {
-        auto devices = device_detection::detect_and_get_json_str();
-        g_devices = devices;
-        app->start(hwnd, std::move(devices));
+        auto [devices_list, devices_json] = device_detection::detect_and_get_json_str();
+        g_devices = devices_list;
+        app->start(hwnd, std::move(devices_json));
         break;
     }
     case WM_CLOSE:
@@ -88,7 +88,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
     }
     hdnw_label = CreateWindow(L"static", L"",
         WS_CHILD | WS_VISIBLE | WS_TABSTOP,
-        10, 10, 280, 180,
+        10, 10, 600, 420,
         hwnd, (HMENU)(501),
         hInstance, NULL);
     SetWindowText(hdnw_label, std::wstring(g_devices.begin(), g_devices.end()).data());
