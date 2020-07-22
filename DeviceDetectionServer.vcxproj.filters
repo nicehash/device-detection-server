@@ -104,6 +104,8 @@
     </ResourceCompile>
   </ItemGroup>
   <ItemGroup>
-    <Font Include="Ubuntu-R.ttf" />
+    <Font Include="Ubuntu-R.ttf">
+      <Filter>Resource Files</Filter>
+    </Font>
   </ItemGroup>
 </Project>
