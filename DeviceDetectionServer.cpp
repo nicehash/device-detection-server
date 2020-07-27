@@ -71,7 +71,6 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
             SelectObject(hdc, title_font);
             DrawText(hdc, L"No devices found", -1, &title_rect, DT_SINGLELINE | DT_NOCLIP | DT_CENTER);
             DeleteObject(title_font);
-
         }
         else
         {
@@ -130,9 +129,8 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
         DeleteObject(footer_font);
 
         EndPaint(hwnd, &ps);
-
     }
-        break;
+    break;
     case WM_CLOSE:
     {
         DestroyWindow(hwnd);
@@ -187,8 +185,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
     if (!RegisterClassEx(&wc))
     {
-        MessageBox(NULL, L"Window Registration Failed!", L"Error!",
-            MB_ICONEXCLAMATION | MB_OK);
+        MessageBox(NULL, L"Window Registration Failed!", L"Error!", MB_ICONEXCLAMATION | MB_OK);
         return 0;
     }
 
@@ -202,8 +199,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
     if (hwnd == NULL)
     {
-        MessageBox(NULL, L"Window Creation Failed!", L"Error!",
-            MB_ICONEXCLAMATION | MB_OK);
+        MessageBox(NULL, L"Window Creation Failed!", L"Error!", MB_ICONEXCLAMATION | MB_OK);
         return 0;
     }
 
