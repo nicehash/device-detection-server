@@ -54,13 +54,13 @@
     <ClInclude Include="resource.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="framework.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="targetver.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="DeviceDetectionServer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="font.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -89,12 +89,18 @@
     <ClCompile Include="DeviceDetectionServer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="font.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <Image Include="small.ico">
+    <Image Include="icon.ico">
       <Filter>Resource Files</Filter>
     </Image>
-    <Image Include="DeviceDetectionServer.ico">
+    <Image Include="icon.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="not_found.bmp">
       <Filter>Resource Files</Filter>
     </Image>
   </ItemGroup>

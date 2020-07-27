@@ -39,7 +39,7 @@ boost::system::error_code listener_impl::start()
     } catch (boost::system::error_code &e) {
         TRACE("Cannot bind to http port: " << m_bind_port);
         return e;
-    } catch (std::exception &e) {
+    } catch (...) {
         TRACE("Cannot bind to http port: " << m_bind_port);
         return boost::system::errc::make_error_code(boost::system::errc::already_connected);
     }

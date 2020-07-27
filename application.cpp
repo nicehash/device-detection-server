@@ -12,6 +12,11 @@ void application::start(HWND hwnd, std::string &&devices) {
 }
 
 void application::stop() {
-	m_listener->stop();
-	m_workers->stop();
+	if (m_listener) {
+		m_listener->stop();
+	}
+
+	if (m_workers) {
+		m_workers->stop();
+	}
 }
