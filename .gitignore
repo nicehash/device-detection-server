@@ -3,3 +3,4 @@ Debug/
 x64/
 *.vcxproj.user
 *.aps
+_signed_releases/
