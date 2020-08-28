@@ -18,6 +18,7 @@ auto create_decline_request_response(const std::shared_ptr<boost::beast::http::r
 {
     boost::beast::http::response<boost::beast::http::string_body> response{status, request->version()};
     response.set(boost::beast::http::field::server, BOOST_BEAST_VERSION_STRING);
+    response.set(boost::beast::http::field::access_control_allow_origin, "*");
     response.set(boost::beast::http::field::content_type, "application/json");
     response.body() = std::move(body);
     response.prepare_payload();
@@ -31,6 +32,19 @@ auto create_success_response(const std::shared_ptr<boost::beast::http::request<b
     response.set(boost::beast::http::field::access_control_allow_origin, "*");
     response.set(boost::beast::http::field::content_type, "application/json");
     response.body() = std::move(body);
+    response.prepare_payload();
+    return response;
+}
+
+auto create_options_response(const std::shared_ptr<boost::beast::http::request<boost::beast::http::string_body>>& request)
+{
+    boost::beast::http::response<boost::beast::http::string_body> response{ boost::beast::http::status::ok, request->version() };
+    response.set(boost::beast::http::field::server, BOOST_BEAST_VERSION_STRING);
+    response.set(boost::beast::http::field::access_control_allow_origin, "*");
+    response.set(boost::beast::http::field::access_control_allow_methods, "GET,HEAD,PUT,PATCH,POST,DELETE");
+    response.set(boost::beast::http::field::vary, "Access-Control-Request-Headers");
+    response.set(boost::beast::http::field::access_control_allow_headers, "x-request-id,x-user-agent");
+    response.set(boost::beast::http::field::content_length, "0");
     response.prepare_payload();
     return response;
 }
@@ -154,6 +168,11 @@ void connection_impl::close_socket()
 
 void connection_impl::handle_request(const http_request_ptr &request)
 {
+    if (boost::beast::http::verb::options == request->method()) {
+        write(create_options_response(request));
+        return;
+    }
+    
     if (request->target().empty() ||
         request->target()[0] != '/' ||
         request->target().find("..") != boost::beast::string_view::npos) {
