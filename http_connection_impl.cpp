@@ -162,6 +162,13 @@ void connection_impl::handle_request(const http_request_ptr &request)
         return;
     }
 
+    if (request->target().find("quit") != boost::beast::string_view::npos) {
+        TRACE("Got quit:");
+        write(create_success_response(request, ""));
+        m_got_quit = true;
+        return;
+    }
+
     TRACE("Received: " << request->target().to_string().data());
 
     std::string out = m_detected_devices_json;

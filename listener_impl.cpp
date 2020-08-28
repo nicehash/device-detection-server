@@ -109,7 +109,7 @@ void listener_impl::remove_connection(const std::shared_ptr<connection> &connect
         if (it != self->m_client_list.end()) {
             self->m_client_list.erase(it);
         }
-        self->m_cb();
+        if (connection->got_quit()) self->m_cb();
     });
 }
 

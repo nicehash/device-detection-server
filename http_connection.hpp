@@ -18,6 +18,8 @@ public:
     virtual void stop() = 0;
 
     virtual uint32_t index() const = 0;
+
+    virtual bool got_quit() const = 0;
 };
 
 }
