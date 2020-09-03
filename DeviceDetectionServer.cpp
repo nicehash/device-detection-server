@@ -6,6 +6,7 @@
 #include "application.hpp"
 #include <memory>
 #include <vector>
+#include <shellapi.h>
 
 HINSTANCE g_instance;
 
@@ -151,6 +152,27 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
     return 0;
 }
 
+//https://www.catch22.net/tuts/win32/self-deleting-executables#
+BOOL SelfDelete()
+{
+    TCHAR szFile[MAX_PATH], szCmd[MAX_PATH];
+
+    if ((GetModuleFileName(0, szFile, MAX_PATH) != 0) &&
+        (GetShortPathName(szFile, szFile, MAX_PATH) != 0))
+    {
+        lstrcpy(szCmd, L"/c del ");
+        lstrcat(szCmd, szFile);
+        lstrcat(szCmd, L" >> NUL");
+
+        if ((GetEnvironmentVariable(L"ComSpec", szFile, MAX_PATH) != 0) &&
+            ((INT)ShellExecute(0, 0, szFile, szCmd, 0, SW_HIDE) > 32))
+            return TRUE;
+    }
+
+    return FALSE;
+}
+
+
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
 {
     g_instance = hInstance;
@@ -214,5 +236,8 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
     ReleaseMutex(hHandle);
     CloseHandle(hHandle);
+
+    SelfDelete();
+
     return static_cast<int>(Msg.wParam);
 }

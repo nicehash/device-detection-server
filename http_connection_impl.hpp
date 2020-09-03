@@ -29,6 +29,8 @@ public:
 
     uint32_t index() const override { return m_index; }
 
+    bool got_quit() const override { return m_got_quit; }
+
 private:
 
     void write(boost::beast::http::response<boost::beast::http::string_body> const &response);
@@ -57,6 +59,7 @@ private:
     bool m_closed = false;
 
     std::string m_detected_devices_json;
+    bool m_got_quit = false;
  };
 
 }
