@@ -54,8 +54,10 @@ std::string CPU_Brand() {
 
 std::tuple<std::vector<std::string>, std::string> device_detection::detect_and_get_json_str() {
     std::vector<std::string> devices;
-	const auto cpu_count = PhysicalProcessorCount();
 	const auto cpu_name = CPU_Brand();
+	const auto is_amd_threadripper = cpu_name.find("Threadripper") != std::string::npos;
+	const auto cpu_count = is_amd_threadripper ? 1 : PhysicalProcessorCount();
+	
 	for (auto i = 0; i < cpu_count; i++) devices.push_back(cpu_name);
     detect_amd_adl::fill_amd_device_names(devices);
     detect_nvidia_nvml::fill_nvidia_device_names(devices);
