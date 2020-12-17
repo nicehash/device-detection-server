@@ -44,6 +44,7 @@ void detect_nvidia_nvml::fill_nvidia_device_names(std::vector<std::string>& devi
 }
 
 typedef int(*nvml_Init)(void);
+typedef int(*nvml_InitWithFlags)(unsigned int  flags);
 typedef int(*nvml_Shutdown)(void);
 typedef nvmlReturn_t(*nvml_DeviceGetCount)(unsigned int* deviceCount);
 typedef nvmlReturn_t(*nvml_DeviceGetHandleByIndex_v2)(unsigned int  index, nvmlDevice_t* device);
@@ -51,6 +52,7 @@ typedef nvmlReturn_t(*nvml_DeviceGetMemoryInfo)(nvmlDevice_t device, nvmlMemory_
 typedef nvmlReturn_t(*nvml_DeviceGetName)(nvmlDevice_t device, char* name, unsigned int  length);
 
 nvml_Init NVMLInit = nullptr;
+nvml_InitWithFlags NVMLInitWithFlags = nullptr;
 nvml_Shutdown NVMLShutdown = nullptr;
 nvml_DeviceGetCount NVMLDeviceGetCount = nullptr;
 nvml_DeviceGetHandleByIndex_v2 NVMLDeviceGetHandleByIndex_v2 = nullptr;
@@ -73,6 +75,7 @@ bool nvml_init() {
 	if (hmod == NULL) return false;
 
 	NVMLInit = (nvml_Init)GetProcAddress(hmod, "nvmlInit_v2");
+	NVMLInitWithFlags = (nvml_InitWithFlags)GetProcAddress(hmod, "nvmlInitWithFlags");
 	NVMLShutdown = (nvml_Shutdown)GetProcAddress(hmod, "nvmlShutdown");
 	NVMLDeviceGetCount = (nvml_DeviceGetCount)GetProcAddress(hmod, "nvmlDeviceGetCount");
 	NVMLDeviceGetHandleByIndex_v2 = (nvml_DeviceGetHandleByIndex_v2)GetProcAddress(hmod, "nvmlDeviceGetHandleByIndex_v2");
@@ -81,7 +84,8 @@ bool nvml_init() {
 
 	int initStatus = -1;
 	if (NVMLInit) {
-		initStatus = NVMLInit();
+		//initStatus = NVMLInit();
+		initStatus = NVMLInitWithFlags(0);
 	}
 	return NVML_SUCCESS == initStatus;
 }
